@@ -1,5 +1,7 @@
 package com.sabrouch.springjmspostgres.service;
 
+import com.sabrouch.springjmspostgres.appUser.AppUserRole;
+import com.sabrouch.springjmspostgres.appUser.Appuser;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,7 +10,21 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RegistrationService {
+    private AppUserService appUserService;
+    private EMailValidation eMailValidation;
     public String register(RegistrationReguest request) {
-        return "works";
+        boolean isValidEmail = eMailValidation.test(request.getEmail());
+        if (!isValidEmail){
+           throw  new IllegalStateException("is not valid email");
+        }
+        return appUserService.signup(new Appuser(
+                request.getName(),
+                request.getUsername(),
+                request.getEmail(),
+                request.getPassword(),
+                AppUserRole.USER,
+                true,
+                false
+                ));
     }
 }
