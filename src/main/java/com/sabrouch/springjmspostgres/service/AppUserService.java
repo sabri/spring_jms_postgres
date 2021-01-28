@@ -2,7 +2,7 @@ package com.sabrouch.springjmspostgres.service;
 
 import com.sabrouch.springjmspostgres.appUser.Appuser;
 import com.sabrouch.springjmspostgres.token.ConfirmationToken;
-import com.sabrouch.springjmspostgres.token.ConfirmationTokenRepository;
+import com.sabrouch.springjmspostgres.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class AppUserService implements UserDetailsService {
    private final AppUserRepository appUserRepository;
    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-   private final ConfirmationTokenRepository confirmationTokenRepository;
+   private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -44,7 +44,12 @@ public class AppUserService implements UserDetailsService {
                 LocalDateTime.now().minusDays(15),
                 appuser
         );
-        confirmationTokenRepository.save(confirmationToken);
+        confirmationTokenService.saveConfirmationToken(
+                confirmationToken);
         return token;
+    }
+
+    public int enableAppUser(String email) {
+        return appUserRepository.enableAppUser(email);
     }
 }

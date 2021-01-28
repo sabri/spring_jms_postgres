@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class RegistrationReguest {
+public class RegistrationRequest {
 
     private final String name;
     private final String username;
