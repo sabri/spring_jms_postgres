@@ -1,4 +1,4 @@
-package com.sabrouch.springjmspostgres.appUser.service;
+package com.sabrouch.springjmspostgres.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.sabrouch.springjmspostgres.appUser.service;
+package com.sabrouch.springjmspostgres.service;
 
 import com.sabrouch.springjmspostgres.appUser.Appuser;
 import org.springframework.stereotype.Repository;
