@@ -1,12 +1,17 @@
 package com.sabrouch.springjmspostgres.service;
 
 import com.sabrouch.springjmspostgres.appUser.Appuser;
+import com.sabrouch.springjmspostgres.token.ConfirmationToken;
+import com.sabrouch.springjmspostgres.token.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Created by sabrouch.
@@ -17,8 +22,7 @@ import org.springframework.stereotype.Service;
 public class AppUserService implements UserDetailsService {
    private final AppUserRepository appUserRepository;
    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
+   private final ConfirmationTokenRepository confirmationTokenRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -33,6 +37,14 @@ public class AppUserService implements UserDetailsService {
         String encoded = bCryptPasswordEncoder.encode(appuser.getPassword());
         appuser.setPassword(encoded);
         appUserRepository.save(appuser);
-        return "it works";
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken=new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().minusDays(15),
+                appuser
+        );
+        confirmationTokenRepository.save(confirmationToken);
+        return token;
     }
 }

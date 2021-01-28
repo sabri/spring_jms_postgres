@@ -3,6 +3,7 @@ package com.sabrouch.springjmspostgres.controller;
 import com.sabrouch.springjmspostgres.service.RegistrationReguest;
 import com.sabrouch.springjmspostgres.service.RegistrationService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,10 @@ public class Registration {
 
 
     private final RegistrationService registrationService;
-    @PostMapping
+
+    @PostMapping("/hello")
     public String register (@RequestBody RegistrationReguest request){
+
         return registrationService.register(request);
     }
 }

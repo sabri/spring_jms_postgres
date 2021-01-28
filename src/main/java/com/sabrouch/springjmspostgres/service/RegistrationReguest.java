@@ -1,15 +1,15 @@
 package com.sabrouch.springjmspostgres.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 /**
  * Created by sabrouch.
  * Date: 1/28/2021
  */
+@Getter
 @AllArgsConstructor
-@Data
-
+@EqualsAndHashCode
+@ToString
 public class RegistrationReguest {
 
     private final String name;
